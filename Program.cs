@@ -1,20 +1,47 @@
 ﻿// See https://aka.ms/new-console-template for more information
 
-Console.WriteLine("Hello, World!");
+using game1401_la_5;
+
 LearningActivity5_1();
 return;
 
 void LearningActivity5_1()
 {
+    List<HighScores> highScores = new List<HighScores>();
+    GameSelection choice;
     Random randomScore = new Random();
-    while (true)
-    {
-        GameSelection choice = ChooseOption();
-        //int newHighScore = randomScore.Next(1000, 1000000);
-        //Console.WriteLine($"You finished with a score of {newHighScore}");
-        //if the player 
 
-    }
+    do
+    {
+        choice = ChooseOption();
+
+        switch(choice)
+        {
+            case GameSelection.Play:
+                int scores = randomScore.Next(1000, 1000000);
+                Console.WriteLine("Your score is "+scores+"\nPlease enter your name:\n");
+                string name = Console.ReadLine();
+                highScores.Add(new HighScores(scores, name));
+                break;
+            case GameSelection.SeeHighScore:
+                if (highScores.Count < 1)
+                {
+                    Console.WriteLine("There are no recorded high scores");
+                }
+                else
+                {
+                    for (int i = 0; i < highScores.Count; ++i)
+                    {
+                        highScores[i].printHighScore();
+                    }
+                }
+                break;
+            case GameSelection.Exit:
+                Console.WriteLine("Ok, bye bye!");
+                break;
+        }
+
+    } while (choice != GameSelection.Exit);
 }
 
 GameSelection ChooseOption()
