@@ -13,5 +13,15 @@
             _genre = genre;
             _length = length;
         }
+
+        public void printVideo()
+        {
+            Console.WriteLine(_name+"\nGenre: "+_genre+"\nLength: "+_length+"\nID: "+_id);
+        }
+
+        public string getName()
+        {
+            return _name;
+        }
     }
 }
