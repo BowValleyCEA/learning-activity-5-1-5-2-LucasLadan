@@ -22,9 +22,10 @@ namespace game1401_la_5
             _previouslyRented = new List<Videos>();
         }
 
-        public void printCurrentlyRented()
+        public void printUserInfo()
         {
-            Console.WriteLine("User " + _name + " is currently renting ");
+            Console.WriteLine(_name+"\nID: "+_id);
+            Console.WriteLine("Currently renting: ");
             if (_currentlyRented.Count > 0)
             {
                 for (int i = 0; i < _currentlyRented.Count; i++)
@@ -36,11 +37,8 @@ namespace game1401_la_5
             {
                 Console.Write("nothing");
             }
-        }
 
-        public void printPreviousyRented()
-        {
-            Console.WriteLine("User " + _name + " has previously rented ");
+            Console.WriteLine("Previous rents: ");
             if (_previouslyRented.Count > 0)
             {
                 for (int i = 0; i < _previouslyRented.Count; i++)
