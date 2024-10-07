@@ -43,7 +43,10 @@ void LearningActivity5_1()
 
     } while (choice != GameSelection.Exit);
 }
+void LearningActivity5_2()
+{
 
+}
 GameSelection ChooseOption()
 {
     bool validSelection = false;
@@ -62,10 +65,7 @@ GameSelection ChooseOption()
 
 }
 //Be kind, rewind.
-void LearningActivity5_2()
-{
 
-}
 
 enum GameSelection
 {
