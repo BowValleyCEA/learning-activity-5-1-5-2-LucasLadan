@@ -22,9 +22,10 @@ namespace game1401_la_5
             _previouslyRented = new List<Videos>();
         }
 
-        public void printUserInfo()
+        public void printUserInfo()//Prints everything about the intro
         {
             Console.WriteLine(_name+"\nID: "+_id);
+
             Console.WriteLine("Currently renting: ");
             if (_currentlyRented.Count > 0)
             {
@@ -50,6 +51,16 @@ namespace game1401_la_5
             {
                 Console.Write("nothing");
             }
+        }
+
+        public void addCurrentVideo (Videos video)
+        {
+            _currentlyRented.Add(video);
+        }
+
+        public void addPreviousVideo(Videos video)
+        {
+            _previouslyRented.Add(video);
         }
     }
 }
