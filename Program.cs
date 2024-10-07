@@ -3,6 +3,7 @@
 using game1401_la_5;
 
 LearningActivity5_1();
+LearningActivity5_2();
 return;
 
 void LearningActivity5_1()
@@ -45,7 +46,7 @@ void LearningActivity5_1()
 }
 void LearningActivity5_2()
 {
-
+    Random randomId = new Random();
 }
 GameSelection ChooseOption()
 {
