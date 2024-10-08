@@ -1,6 +1,7 @@
 ﻿// See https://aka.ms/new-console-template for more information
 
 using game1401_la_5;
+using System.Xml.Linq;
 Random random = new Random();
 LearningActivity5_1();
 LearningActivity5_2();
@@ -65,7 +66,7 @@ void LearningActivity5_2()
     int input = 0;
     do
     {
-        switch (inputInt("What do you wanna do?\n1: Get the videos\n2: Go into the user menu\n3: Exit"))
+        switch (inputInt("\nWhat do you wanna do?\n1: Get the videos\n2: Go into the user menu\n3: Exit"))
         {
             case 1://Printing all the videos
                 for (int i = 0; i < videos.Count; i++)
@@ -73,21 +74,54 @@ void LearningActivity5_2()
                     Console.Write("\n\n"+(i + 1) + ": ");
                     videos[i].printVideo();
                 }
-                Console.WriteLine("\n");
                 break;
 
             case 2://User menu
                 
                 do
                 {
-                    switch (inputInt("Which user function are you gonna use?\nMake a new user\nGet user data\n3: Exit"))
+                    switch (inputInt("\nWhich user function are you gonna use?\n1: Make a new user\n2: Get user data\n3: Exit"))
                     {
-                        case 1:
+                        case 1://Creating a new user
                             users.Add(createNewUser(videos));
+                            break;
+
+                        case 2://Checking out a user
+                            if (users.Count > 0)//If any users exists
+                            {
+                                for (int i = 0;i < users.Count;i++)//Printing the names of each user
+                                {
+                                    Console.WriteLine("\n"+(i+1)+": "+ users[i].getName());
+                                }
+                                Console.WriteLine("\nWhich user do you wanna look at?");
+                                do
+                                {
+                                    if (int.TryParse(Console.ReadLine(), out input) && input <= users.Count && input > 0)//Checking if the user inputted a valid number
+                                    {
+                                        users[input-1].printUserInfo();
+                                        Console.Write("\n");
+                                    }
+                                    else
+                                    {
+                                        Console.WriteLine("Invalid input, try again");
+                                    }
+                                } while (input > users.Count || input < 0);//Repeats if the number isn't valid
+                            }
+                            else
+                            {
+                                Console.WriteLine("No users found.");
+                            }
+                            break;
+                        case 3:
+                            stillLooping = false;
                             break;
                     }
                 } while(stillLooping);
                 stillLooping = true;
+                break;
+
+            case 3://Exiting the loop
+                stillLooping=false;
                 break;
         }
     } while (stillLooping);
@@ -97,7 +131,8 @@ void LearningActivity5_2()
 User createNewUser(List<Videos> videos)
 {
     Console.WriteLine("What is the User's name?");
-    User newUser = new User(Console.ReadLine(), randomInt());
+    string name = Console.ReadLine();
+    User newUser = new User(name, randomInt());
 
     for (int i = 0; i < videos.Count; i++)//Automatically adding random videos into the new user
     {
@@ -112,7 +147,7 @@ User createNewUser(List<Videos> videos)
         }
 
     }
-    Console.WriteLine("User " + newUser.getName + " ID: " + newUser.getId() + " created!");
+    Console.WriteLine("User " + newUser.getName() + " ID: " + newUser.getId() + " created!");
     return newUser;
 }
 

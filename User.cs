@@ -32,14 +32,14 @@ namespace game1401_la_5
         }
         public void printUserInfo()//Prints everything about the intro
         {
-            Console.WriteLine(_name+"\nID: "+_id);
+            Console.WriteLine("\n"+_name+"\nID: "+_id);
 
-            Console.WriteLine("Currently renting: ");
+            Console.WriteLine("\nCurrently renting: ");
             if (_currentlyRented.Count > 0)
             {
                 for (int i = 0; i < _currentlyRented.Count; i++)
                 {
-                    Console.Write(_currentlyRented[i].getName() + " ");
+                    Console.Write(_currentlyRented[i].getName() + ", ");
                 }
             }
             else
@@ -47,12 +47,12 @@ namespace game1401_la_5
                 Console.Write("nothing");
             }
 
-            Console.WriteLine("Previous rents: ");
+            Console.WriteLine("\n\nPrevious rents: ");
             if (_previouslyRented.Count > 0)
             {
                 for (int i = 0; i < _previouslyRented.Count; i++)
                 {
-                    Console.Write(_previouslyRented[i].getName() + " ");
+                    Console.Write(_previouslyRented[i].getName() + ", ");
                 }
             }
             else
