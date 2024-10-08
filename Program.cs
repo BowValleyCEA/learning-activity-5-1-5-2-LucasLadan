@@ -15,7 +15,7 @@ int inputInt (string stringInput)//Make the user input a number between 1 and 3
         Console.WriteLine(stringInput);
         if (int.TryParse(Console.ReadLine(), out input) && input >= 1 && input <= 3)
         {
-            notValid = true;
+            notValid = false;
         }
     }while (notValid);
 
@@ -63,6 +63,8 @@ void LearningActivity5_1()
         }
 
     } while (choice != GameSelection.Exit);
+
+
 }
 
 User createNewUser(List<Videos> videos)
@@ -103,8 +105,20 @@ void LearningActivity5_2()
 
     bool stillLooping = true;
     int input = 0;
-    x
-    
+    do
+    {
+        switch (inputInt("Do you wanna\n1: Get the videos\n2: Go into the user menu\n3: Exit"))
+        {
+            case 1:
+                for (int i = 0; i < videos.Count; i++)
+                {
+                    Console.WriteLine((i + 1) + ": ");
+                    videos[i].printVideo();
+                }
+                break;
+        }
+    } while (stillLooping);
+
 }
 GameSelection ChooseOption()
 {
