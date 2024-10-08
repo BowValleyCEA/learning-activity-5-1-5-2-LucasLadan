@@ -6,27 +6,6 @@ LearningActivity5_1();
 LearningActivity5_2();
 return;
 
-int inputInt (string stringInput)//Make the user input a number between 1 and 3
-{
-    bool notValid = true;
-    int input = 0;
-    do
-    {
-        Console.WriteLine(stringInput);
-        if (int.TryParse(Console.ReadLine(), out input) && input >= 1 && input <= 3)
-        {
-            notValid = false;
-        }
-    }while (notValid);
-
-    return input;
-}
-
-int randomInt()//Returns a random number between 1 and 1,000,000
-{
-    return random.Next(1, 1000000);
-}
-
 void LearningActivity5_1()
 {
     List<HighScores> highScores = new List<HighScores>();
@@ -67,27 +46,6 @@ void LearningActivity5_1()
 
 }
 
-User createNewUser(List<Videos> videos)
-{
-    Console.WriteLine("What is the User's name?");
-    User newUser = new User(Console.ReadLine(),randomInt());
-
-    for (int i = 0; i < videos.Count;i++)//Automatically adding random videos into the new user
-    {
-        if (random.Next(0, 3) == 2)
-        {
-            newUser.addCurrentVideo(videos[i]);
-        }
-
-        if (random.Next(0, 3) == 2)
-        {
-            newUser.addPreviousVideo(videos[i]);
-        }
-
-    }
-    Console.WriteLine("User "+newUser.getName+" ID: " + newUser.getId()+" created!");
-    return newUser;
-}
 void LearningActivity5_2()
 {
     List<Videos> videos = new List<Videos>();
@@ -107,27 +65,84 @@ void LearningActivity5_2()
     int input = 0;
     do
     {
-        switch (inputInt("Do you wanna\n1: Get the videos\n2: Go into the user menu\n3: Exit"))
+        switch (inputInt("What do you wanna do?\n1: Get the videos\n2: Go into the user menu\n3: Exit"))
         {
-            case 1:
+            case 1://Printing all the videos
                 for (int i = 0; i < videos.Count; i++)
                 {
-                    Console.WriteLine((i + 1) + ": ");
+                    Console.Write("\n\n"+(i + 1) + ": ");
                     videos[i].printVideo();
                 }
+                Console.WriteLine("\n");
+                break;
+
+            case 2://User menu
+                
+                do
+                {
+                    switch (inputInt("Which user function are you gonna use?\nMake a new user\nGet user data\n3: Exit"))
+                    {
+                        case 1:
+                            users.Add(createNewUser(videos));
+                            break;
+                    }
+                } while(stillLooping);
+                stillLooping = true;
                 break;
         }
     } while (stillLooping);
 
 }
+
+User createNewUser(List<Videos> videos)
+{
+    Console.WriteLine("What is the User's name?");
+    User newUser = new User(Console.ReadLine(), randomInt());
+
+    for (int i = 0; i < videos.Count; i++)//Automatically adding random videos into the new user
+    {
+        if (random.Next(0, 3) == 2)
+        {
+            newUser.addCurrentVideo(videos[i]);
+        }
+
+        if (random.Next(0, 3) == 2)
+        {
+            newUser.addPreviousVideo(videos[i]);
+        }
+
+    }
+    Console.WriteLine("User " + newUser.getName + " ID: " + newUser.getId() + " created!");
+    return newUser;
+}
+
+int inputInt(string stringInput)//Make the user input a number between 1 and 3
+{
+    bool notValid = true;
+    int input = 0;
+    do
+    {
+        Console.WriteLine(stringInput);
+        if (int.TryParse(Console.ReadLine(), out input) && input >= 1 && input <= 3)
+        {
+            notValid = false;
+        }
+    } while (notValid);
+
+    return input;
+}
+
+int randomInt()//Returns a random number between 1 and 1,000,000
+{
+    return random.Next(1, 1000000);
+}
+
 GameSelection ChooseOption()
 {
     int selection = inputInt("Would you like to:\n\t 1: Play again\n\t 2: See the list of high scores\n\t 3: Exit the game?");
     return (GameSelection)selection;
 
 }
-//Be kind, rewind.
-
 
 enum GameSelection
 {
