@@ -4,19 +4,19 @@
     {
         string _name;
         int _id;
-        string _genre;
-        float _length;
-        public Videos (string name, int id, string genre, float length)
+        string _description;
+        double _length;
+        public Videos (string name, int id, string description, double length)
         {
             _name = name;
             _id = id;
-            _genre = genre;
+            _description = description;
             _length = length;
         }
 
         public void printVideo()
         {
-            Console.WriteLine(_name+"\nGenre: "+_genre+"\nLength: "+_length+"\nID: "+_id);
+            Console.WriteLine(_name+"\nGenre: "+_description+"\nLength in hours: "+_length+"\nID: "+_id);
         }
 
         public string getName()
