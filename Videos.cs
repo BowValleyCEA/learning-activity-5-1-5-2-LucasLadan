@@ -16,7 +16,7 @@
 
         public void printVideo()
         {
-            Console.WriteLine(_name+"\nGenre: "+_description+"\nLength in hours: "+_length+"\nID: "+_id);
+            Console.Write(_name+"\nGenre: "+_description+"\nLength in hours: "+_length+"\nID: "+_id);
         }
 
         public string getName()

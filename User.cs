@@ -22,6 +22,14 @@ namespace game1401_la_5
             _previouslyRented = new List<Videos>();
         }
 
+        public string getName()
+        {
+            return _name;
+        }
+        public int getId()
+        {
+            return _id;
+        }
         public void printUserInfo()//Prints everything about the intro
         {
             Console.WriteLine(_name+"\nID: "+_id);
