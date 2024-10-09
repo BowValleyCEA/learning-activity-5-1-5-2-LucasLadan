@@ -41,7 +41,7 @@ namespace game1401_la_5
             {
                 for (int i = 0; i < _currentlyRented.Count; i++)
                 {
-                    Console.Write(_currentlyRented[i].getName() + "\nTime rented: "+ _timeSinceRented[i].CompareTo(DateTime.Now)+"\n\n");
+                    Console.Write(_currentlyRented[i].getName() + "\nTime rented: " + (DateTime.Now.Subtract(_timeSinceRented[i]) +"\n\n"));
                 }
             }
             else
@@ -49,7 +49,7 @@ namespace game1401_la_5
                 Console.Write("nothing");
             }
 
-            Console.WriteLine("\n\nPrevious rents: ");
+            Console.WriteLine("\nPrevious rents: ");
             if (_previouslyRented.Count > 0)
             {
                 for (int i = 0; i < _previouslyRented.Count; i++)
@@ -63,10 +63,40 @@ namespace game1401_la_5
             }
         }
 
+        public int getCurrentRentsCount()
+        {
+            return _currentlyRented.Count;
+        }
+
+        public void removeCurrentRent(int index)
+        {
+            addPreviousVideo(_currentlyRented[index]);
+            _currentlyRented.RemoveAt(index);
+            _timeSinceRented.RemoveAt(index);
+        }
+        public bool CurrentRentCheck()
+        {
+            bool rentingAnything = false;
+            if (_currentlyRented.Count > 0)
+            {
+                rentingAnything= true;
+                Console.WriteLine("\nCurrent rents: ");
+                for (int i = 0; i < _currentlyRented.Count; i++)
+                {
+                    Console.WriteLine((i+1)+": "+ _currentlyRented[i].getName());
+                }
+            }
+            else
+            {
+                Console.WriteLine("This user is currently not renting anything");
+            }
+            return rentingAnything;
+        }
+
         public void addCurrentVideo (Videos video)
         {
             _currentlyRented.Add(video);
-            _timeSinceRented.Add(DateTime.UtcNow);
+            _timeSinceRented.Add(DateTime.Now);
         }
 
         public void addPreviousVideo(Videos video)

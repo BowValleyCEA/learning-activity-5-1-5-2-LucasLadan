@@ -1,6 +1,7 @@
 ﻿// See https://aka.ms/new-console-template for more information
 
 using game1401_la_5;
+using System.Reflection.Metadata;
 using System.Xml.Linq;
 Random random = new Random();
 LearningActivity5_1();
@@ -70,7 +71,7 @@ User createNewUser(List<Videos> videos)
     return newUser;
 }
 
-List<User> rentVideos(List<User> users, List<Videos> videos)
+User rentVideos(User user, List<Videos> videos)//Allowing users to rent or return videos
 {
     bool stillLooping = true;
     int input = 0;
@@ -79,40 +80,29 @@ List<User> rentVideos(List<User> users, List<Videos> videos)
     {
         switch (inputInt("\nWhat is the user doing?\n1: Renting a new video\n2: Returning a video\n3: Exit"))
         {
-            case 1://Adding a video
+            case 1://Making user rent a vieo
                 for (int i = 0; i < videos.Count; i++)
                 {
                     Console.Write("\n\n" + (i + 1) + ": ");
                     videos[i].printVideo();
                 }
                 Console.WriteLine("Which video is the user renting");
+                if ((int.TryParse(Console.ReadLine(), out input)) && input <= videos.Count && input > 0)
+                {
+                    input -= 1;
+                    Console.WriteLine("Giving " + user.getName()+" " + videos[input].getName());
+                    user.addCurrentVideo(videos[input]);
+                }
                 break;
 
             case 2://Checking out a user
-                if (users.Count > 0)//If any users exists
+                if (user.CurrentRentCheck())
                 {
-                    for (int i = 0; i < users.Count; i++)//Printing the names of each user
+                    System.Console.WriteLine("Which video are they returning");
+                    if (int.TryParse(Console.ReadLine(),out input) && input > 0 && input <= user.getCurrentRentsCount())
                     {
-                        Console.WriteLine("\n" + (i + 1) + ": " + users[i].getName());
+                        user.removeCurrentRent(input - 1);
                     }
-                    Console.WriteLine("\nWhich user do you wanna look at?");
-                    do
-                    {
-                        if (int.TryParse(Console.ReadLine(), out input) && input <= users.Count && input > 0)//Checking if the user inputted a valid number
-                        {
-                            users[input - 1].printUserInfo();
-                            Console.Write("\n");
-                            users = rentVideos(users, videos);
-                        }
-                        else
-                        {
-                            Console.WriteLine("Invalid input, try again");
-                        }
-                    } while (input > users.Count || input < 0);//Repeats if the number isn't valid
-                }
-                else
-                {
-                    Console.WriteLine("No users found.");
                 }
                 break;
             case 3:
@@ -121,10 +111,10 @@ List<User> rentVideos(List<User> users, List<Videos> videos)
         }
     } while (stillLooping);
 
-    return users;
+    return user;
 }
 
-List<User> userMethods(List<User> users, List<Videos> videos)
+List<User> userMethods(List<User> users, List<Videos> videos)//The menu for the users
 {
     bool stillLooping = true;
     int input = 0;
@@ -145,19 +135,13 @@ List<User> userMethods(List<User> users, List<Videos> videos)
                         Console.WriteLine("\n" + (i + 1) + ": " + users[i].getName());
                     }
                     Console.WriteLine("\nWhich user do you wanna look at?");
-                    do
+                    if (int.TryParse(Console.ReadLine(), out input) && input <= users.Count && input > 0)//Checking if the user inputted a valid number
                     {
-                        if (int.TryParse(Console.ReadLine(), out input) && input <= users.Count && input > 0)//Checking if the user inputted a valid number
-                        {
-                            users[input - 1].printUserInfo();
-                            Console.Write("\n");
-                            users = rentVideos(users, videos);
-                        }
-                        else
-                        {
-                            Console.WriteLine("Invalid input, try again");
-                        }
-                    } while (input > users.Count || input < 0);//Repeats if the number isn't valid
+                        input -= 1;
+                        users[input].printUserInfo();
+                        Console.Write("\n");
+                        users[input] = rentVideos(users[input], videos);
+                    }
                 }
                 else
                 {
