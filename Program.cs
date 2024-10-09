@@ -47,6 +47,131 @@ void LearningActivity5_1()
 
 }
 
+User createNewUser(List<Videos> videos)
+{
+    Console.WriteLine("What is the User's name?");
+    string name = Console.ReadLine();
+    User newUser = new User(name, randomInt());
+
+    for (int i = 0; i < videos.Count; i++)//Automatically adding random videos into the new user
+    {
+        if (random.Next(0, 3) == 2)
+        {
+            newUser.addCurrentVideo(videos[i]);
+        }
+
+        if (random.Next(0, 3) == 2)
+        {
+            newUser.addPreviousVideo(videos[i]);
+        }
+
+    }
+    Console.WriteLine("User " + newUser.getName() + " ID: " + newUser.getId() + " created!");
+    return newUser;
+}
+
+List<User> rentVideos(List<User> users, List<Videos> videos)
+{
+    bool stillLooping = true;
+    int input = 0;
+
+    do
+    {
+        switch (inputInt("\nWhat is the user doing?\n1: Renting a new video\n2: Returning a video\n3: Exit"))
+        {
+            case 1://Adding a video
+                for (int i = 0; i < videos.Count; i++)
+                {
+                    Console.Write("\n\n" + (i + 1) + ": ");
+                    videos[i].printVideo();
+                }
+                Console.WriteLine("Which video is the user renting");
+                break;
+
+            case 2://Checking out a user
+                if (users.Count > 0)//If any users exists
+                {
+                    for (int i = 0; i < users.Count; i++)//Printing the names of each user
+                    {
+                        Console.WriteLine("\n" + (i + 1) + ": " + users[i].getName());
+                    }
+                    Console.WriteLine("\nWhich user do you wanna look at?");
+                    do
+                    {
+                        if (int.TryParse(Console.ReadLine(), out input) && input <= users.Count && input > 0)//Checking if the user inputted a valid number
+                        {
+                            users[input - 1].printUserInfo();
+                            Console.Write("\n");
+                            users = rentVideos(users, videos);
+                        }
+                        else
+                        {
+                            Console.WriteLine("Invalid input, try again");
+                        }
+                    } while (input > users.Count || input < 0);//Repeats if the number isn't valid
+                }
+                else
+                {
+                    Console.WriteLine("No users found.");
+                }
+                break;
+            case 3:
+                stillLooping = false;
+                break;
+        }
+    } while (stillLooping);
+
+    return users;
+}
+
+List<User> userMethods(List<User> users, List<Videos> videos)
+{
+    bool stillLooping = true;
+    int input = 0;
+
+    do
+    {
+        switch (inputInt("\nWhich user function are you gonna use?\n1: Make a new user\n2: Get user data\n3: Exit"))
+        {
+            case 1://Creating a new user
+                users.Add(createNewUser(videos));
+                break;
+
+            case 2://Checking out a user
+                if (users.Count > 0)//If any users exists
+                {
+                    for (int i = 0; i < users.Count; i++)//Printing the names of each user
+                    {
+                        Console.WriteLine("\n" + (i + 1) + ": " + users[i].getName());
+                    }
+                    Console.WriteLine("\nWhich user do you wanna look at?");
+                    do
+                    {
+                        if (int.TryParse(Console.ReadLine(), out input) && input <= users.Count && input > 0)//Checking if the user inputted a valid number
+                        {
+                            users[input - 1].printUserInfo();
+                            Console.Write("\n");
+                            users = rentVideos(users, videos);
+                        }
+                        else
+                        {
+                            Console.WriteLine("Invalid input, try again");
+                        }
+                    } while (input > users.Count || input < 0);//Repeats if the number isn't valid
+                }
+                else
+                {
+                    Console.WriteLine("No users found.");
+                }
+                break;
+            case 3:
+                stillLooping = false;
+                break;
+        }
+    } while (stillLooping);
+    return users;
+}
+
 void LearningActivity5_2()
 {
     List<Videos> videos = new List<Videos>();
@@ -77,47 +202,7 @@ void LearningActivity5_2()
                 break;
 
             case 2://User menu
-                
-                do
-                {
-                    switch (inputInt("\nWhich user function are you gonna use?\n1: Make a new user\n2: Get user data\n3: Exit"))
-                    {
-                        case 1://Creating a new user
-                            users.Add(createNewUser(videos));
-                            break;
-
-                        case 2://Checking out a user
-                            if (users.Count > 0)//If any users exists
-                            {
-                                for (int i = 0;i < users.Count;i++)//Printing the names of each user
-                                {
-                                    Console.WriteLine("\n"+(i+1)+": "+ users[i].getName());
-                                }
-                                Console.WriteLine("\nWhich user do you wanna look at?");
-                                do
-                                {
-                                    if (int.TryParse(Console.ReadLine(), out input) && input <= users.Count && input > 0)//Checking if the user inputted a valid number
-                                    {
-                                        users[input-1].printUserInfo();
-                                        Console.Write("\n");
-                                    }
-                                    else
-                                    {
-                                        Console.WriteLine("Invalid input, try again");
-                                    }
-                                } while (input > users.Count || input < 0);//Repeats if the number isn't valid
-                            }
-                            else
-                            {
-                                Console.WriteLine("No users found.");
-                            }
-                            break;
-                        case 3:
-                            stillLooping = false;
-                            break;
-                    }
-                } while(stillLooping);
-                stillLooping = true;
+                users = userMethods(users, videos);
                 break;
 
             case 3://Exiting the loop
@@ -126,29 +211,6 @@ void LearningActivity5_2()
         }
     } while (stillLooping);
 
-}
-
-User createNewUser(List<Videos> videos)
-{
-    Console.WriteLine("What is the User's name?");
-    string name = Console.ReadLine();
-    User newUser = new User(name, randomInt());
-
-    for (int i = 0; i < videos.Count; i++)//Automatically adding random videos into the new user
-    {
-        if (random.Next(0, 3) == 2)
-        {
-            newUser.addCurrentVideo(videos[i]);
-        }
-
-        if (random.Next(0, 3) == 2)
-        {
-            newUser.addPreviousVideo(videos[i]);
-        }
-
-    }
-    Console.WriteLine("User " + newUser.getName() + " ID: " + newUser.getId() + " created!");
-    return newUser;
 }
 
 int inputInt(string stringInput)//Make the user input a number between 1 and 3

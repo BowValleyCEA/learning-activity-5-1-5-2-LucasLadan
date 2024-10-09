@@ -13,6 +13,7 @@ namespace game1401_la_5
         int _id;
         List<Videos> _currentlyRented;
         List<Videos> _previouslyRented;
+        List<DateTime> _timeSinceRented;
 
         public User (string name, int id)
         {
@@ -20,6 +21,7 @@ namespace game1401_la_5
             _id = id;
             _currentlyRented = new List<Videos>();
             _previouslyRented = new List<Videos>();
+            _timeSinceRented = new List<DateTime>();
         }
 
         public string getName()
@@ -39,7 +41,7 @@ namespace game1401_la_5
             {
                 for (int i = 0; i < _currentlyRented.Count; i++)
                 {
-                    Console.Write(_currentlyRented[i].getName() + ", ");
+                    Console.Write(_currentlyRented[i].getName() + "\nTime rented: "+ _timeSinceRented[i].CompareTo(DateTime.Now)+"\n\n");
                 }
             }
             else
@@ -64,11 +66,13 @@ namespace game1401_la_5
         public void addCurrentVideo (Videos video)
         {
             _currentlyRented.Add(video);
+            _timeSinceRented.Add(DateTime.UtcNow);
         }
 
         public void addPreviousVideo(Videos video)
         {
             _previouslyRented.Add(video);
         }
+
     }
 }
